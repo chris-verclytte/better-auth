@@ -27,7 +27,7 @@ export interface OAuthProvider<
 		redirectURI: string;
 		codeVerifier?: string;
 	}) => Promise<OAuth2Tokens>;
-	getUserInfo: (token: OAuth2Tokens) => Promise<{
+	getUserInfo: (token: OAuth2Tokens, extraData?: Record<string, unknown>) => Promise<{
 		user: {
 			id: string;
 			name?: string;
