@@ -605,7 +605,7 @@ export interface BetterAuthOptions {
 				/**
 				 * Hook that is called after a user is created.
 				 */
-				after?: (user: User) => Promise<void>;
+				after?: (user: User, data: User & Record<string, any>) => Promise<void>;
 			};
 		};
 		session?: {
@@ -625,7 +625,7 @@ export interface BetterAuthOptions {
 				/**
 				 * Hook that is called after a user is created.
 				 */
-				after?: (session: Session) => Promise<void>;
+				after?: (session: Session, data: Session & Record<string, any>) => Promise<void>;
 			};
 		};
 		account?: {
@@ -645,7 +645,7 @@ export interface BetterAuthOptions {
 				/**
 				 * Hook that is called after a user is created.
 				 */
-				after?: (account: Account) => Promise<void>;
+				after?: (account: Account, data: Account & Record<string, any>) => Promise<void>;
 			};
 		};
 		verification?: {
