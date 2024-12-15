@@ -30,12 +30,14 @@ export async function generateState(
 		codeVerifier,
 		errorURL: c.body?.errorCallbackURL || c.query?.currentURL,
 		newUserURL: c.body?.newUserCallbackURL,
+		extraData: c.body?.data,
 		link,
 		/**
 		 * This is the actual expiry time of the state
 		 */
 		expiresAt: Date.now() + 10 * 60 * 1000,
 	});
+
 	const expiresAt = new Date();
 	expiresAt.setMinutes(expiresAt.getMinutes() + 10);
 	const verification = await c.context.internalAdapter.createVerificationValue({
@@ -74,6 +76,7 @@ export async function parseState(c: GenericEndpointContext) {
 			codeVerifier: z.string(),
 			errorURL: z.string().optional(),
 			newUserURL: z.string().optional(),
+			extraData: z.record(z.string()),
 			expiresAt: z.number(),
 			link: z
 				.object({

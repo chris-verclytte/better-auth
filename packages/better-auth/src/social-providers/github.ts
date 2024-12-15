@@ -75,9 +75,9 @@ export const github = (options: GithubOptions) => {
 				tokenEndpoint,
 			});
 		},
-		async getUserInfo(token) {
+		async getUserInfo(token, extraData) {
 			if (options.getUserInfo) {
-				return options.getUserInfo(token);
+				return options.getUserInfo(token, extraData);
 			}
 			const { data: profile, error } = await betterFetch<GithubProfile>(
 				"https://api.github.com/user",
@@ -113,7 +113,7 @@ export const github = (options: GithubOptions) => {
 						data.find((e) => e.email === profile.email)?.verified ?? false;
 				}
 			}
-			const userMap = await options.mapProfileToUser?.(profile);
+			const userMap = await options.mapProfileToUser?.(profile, extraData);
 			return {
 				user: {
 					id: profile.id.toString(),
