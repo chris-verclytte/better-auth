@@ -635,7 +635,7 @@ export type BetterAuthOptions = {
 				/**
 				 * Hook that is called after a user is created.
 				 */
-				after?: (user: User) => Promise<void>;
+				after?: (user: User, data: User & Record<string, any>) => Promise<void>;
 			};
 			update?: {
 				/**
@@ -697,7 +697,7 @@ export type BetterAuthOptions = {
 				/**
 				 * Hook that is called after a session is updated.
 				 */
-				after?: (session: Session) => Promise<void>;
+				after?: (session: Session, data: Session & Record<string, any>) => Promise<void>;
 			};
 		};
 		/**
@@ -741,7 +741,7 @@ export type BetterAuthOptions = {
 				/**
 				 * Hook that is called after a account is updated.
 				 */
-				after?: (account: Account) => Promise<void>;
+				after?: (account: Account, data: Account & Record<string, any>) => Promise<void>;
 			};
 		};
 		/**

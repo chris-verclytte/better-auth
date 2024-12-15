@@ -49,7 +49,7 @@ export function getWithHooks(
 		for (const hook of hooks || []) {
 			const toRun = hook[model]?.create?.after;
 			if (toRun) {
-				await toRun(created as any);
+				await toRun(created as any, actualData as any);
 			}
 		}
 
@@ -95,7 +95,7 @@ export function getWithHooks(
 		for (const hook of hooks || []) {
 			const toRun = hook[model]?.update?.after;
 			if (toRun) {
-				await toRun(updated as any);
+				await toRun(updated as any, actualData as any);
 			}
 		}
 		return updated;
@@ -140,7 +140,7 @@ export function getWithHooks(
 		for (const hook of hooks || []) {
 			const toRun = hook[model]?.update?.after;
 			if (toRun) {
-				await toRun(updated as any);
+				await toRun(updated as any, actualData as any);
 			}
 		}
 
