@@ -16,7 +16,7 @@ interface MagicLinkOptions {
 	/**
 	 * Send magic link implementation.
 	 */
-	sendMagicLink: (
+	sendMagicLink?: (
 		data: {
 			email: string;
 			url: string;
@@ -44,7 +44,7 @@ interface MagicLinkOptions {
 	};
 }
 
-export const magicLink = (options: MagicLinkOptions) => {
+export const magicLink = (options: MagicLinkOptions = {}) => {
 	return {
 		id: "magic-link",
 		endpoints: {
@@ -80,13 +80,21 @@ export const magicLink = (options: MagicLinkOptions) => {
 									content: {
 										"application/json": {
 											schema: {
-												type: "object",
-												properties: {
-													status: {
-														type: "boolean",
-													},
-												},
-											},
+                                                oneOf: [
+                                                    {
+                                                        type: "object",
+                                                        properties: {
+                                                            status: {
+                                                                type: "boolean",
+                                                            },
+                                                        },
+                                                    },
+                                                    {
+                                                        type: "string",
+                                                        description: "URL to redirect after magic link verification",
+                                                    },
+                                                ],
+                                            } as any,
 										},
 									},
 								},
@@ -121,6 +129,7 @@ export const magicLink = (options: MagicLinkOptions) => {
 					}/magic-link/verify?token=${verificationToken}&callbackURL=${
 						ctx.body.callbackURL || "/"
 					}`;
+					if (!options.sendMagicLink) return url
 					await options.sendMagicLink(
 						{
 							email,
